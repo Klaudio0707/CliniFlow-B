@@ -1,29 +1,31 @@
-import { IsString, IsNotEmpty, IsOptional, IsDateString, IsPhoneNumber } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsDateString, Matches } from 'class-validator';
 
 export class CreatePatientDto {
   @IsString({ message: 'O nome deve ser um texto.' })
   @IsNotEmpty({ message: 'O nome não pode estar vazio.' })
-  name: string;
+  readonly name: string;
 
   @IsString({ message: 'O número do cartão do plano deve ser um texto.' })
   @IsNotEmpty({ message: 'O número do cartão do plano não pode estar vazio.' })
-  insuranceCardNumber: string;
+  readonly insuranceCardNumber: string;
 
   @IsString({ message: 'O nome do plano deve ser um texto.' })
   @IsNotEmpty({ message: 'O nome do plano não pode estar vazio.' })
-  insurancePlanName: string;
+  readonly insurancePlanName: string;
 
   // Campos opcionais
   @IsDateString({}, { message: 'A data de validade deve estar no formato AAAA-MM-DD.' })
   @IsOptional()
-  cardExpirationDate?: string;
+  readonly cardExpirationDate?: string;
 
-  @IsPhoneNumber('BR', { message: 'Por favor, insira um número de telefone válido.' })
+  @IsString({ message: 'O telefone deve ser um texto.' })
+  @Matches(/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/, {
+    message: 'Por favor, insira um número de telefone válido no formato (XX) XXXXX-XXXX.',
+  })
   @IsOptional()
-  phone?: string;
-
+  readonly phone?: string;
 
   @IsDateString({}, { message: 'A data de nascimento deve estar no formato AAAA-MM-DD.' })
   @IsOptional()
-  birthdate?: string; 
+  readonly birthdate?: string; 
 }

@@ -1,5 +1,6 @@
 
 import { Column, DataType, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { AppointmentEntity } from "src/appointments/entities/appointment.entity";
 
 
 @Table({ tableName: 'patients', timestamps:true})
