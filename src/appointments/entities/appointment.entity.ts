@@ -1,4 +1,4 @@
-import { Model } from "sequelize";
+import { Model } from 'sequelize-typescript';
 import { BelongsTo, Column, DataType, ForeignKey, PrimaryKey, Table } from "sequelize-typescript";
 import {UserEntity}  from "../../users/entities/user.entity";
 import { PatientEntity } from "src/patients/entities/patient.entity";
@@ -11,10 +11,10 @@ export enum AppointmentStatus {
 }
 
 @Table({ tableName: 'appointments', timestamps: true })
-export class AppointmentEntity extends Model{
-    @PrimaryKey
-    @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, })
-    declare id: string;
+export class AppointmentEntity extends Model {
+  @PrimaryKey
+  @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, })
+  declare id: string;
 
     @Column({ type: DataType.STRING, allowNull: false, })
     declare serviceLocation: string;

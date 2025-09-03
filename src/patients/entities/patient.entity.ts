@@ -1,4 +1,3 @@
-
 import { Column, DataType, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { AppointmentEntity } from "src/appointments/entities/appointment.entity";
 
@@ -10,23 +9,23 @@ export class PatientEntity extends Model {
     @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, })
     declare id: string;
 
-    @Column({ type: DataType.STRING, allowNull: false, })
+    @Column({ type: DataType.STRING, allowNull: false})
     declare name: string;
 
-    @Column({ type: DataType.STRING, allowNull: false,})
-    declare InsuranceCardNumber:string;
-    
-    @Column({type: DataType.STRING, allowNull: false,})
+    @Column({ type: DataType.STRING, allowNull: false })
+    declare insuranceCardNumber: string;
+
+    @Column({type: DataType.STRING, allowNull: false})
     declare insurancePlanName:string;
     
-    @Column({type: DataType.DATEONLY, allowNull: true,})
+    @Column({type: DataType.DATEONLY, allowNull: true})
     declare cardExpirationDate: Date | null;
 
 
-    @Column({type: DataType.STRING, allowNull: true,})
+    @Column({type: DataType.STRING, allowNull: true})
     declare phone: string | null;
 
-    @Column({type: DataType.DATEONLY, allowNull: true,})
+    @Column({type: DataType.DATEONLY, allowNull: true})
     declare birthdate?: Date;
 
     @HasMany(() => AppointmentEntity)
