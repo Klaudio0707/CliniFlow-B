@@ -23,10 +23,8 @@ export class AppointmentEntity extends Model {
     type: DataType.ENUM(...Object.values(AppointmentStatus)),
     defaultValue: AppointmentStatus.WAITING,
     allowNull: false,
-      })
-
-    @Column({ type: DataType.ENUM, allowNull: false, })
-    declare status: AppointmentStatus;
+  })
+  declare status: AppointmentStatus;
 
     @Column({ type: DataType.DATE, allowNull: true, })
     declare calledAt?: Date | null;
@@ -34,18 +32,18 @@ export class AppointmentEntity extends Model {
     @Column({ type: DataType.DATE, allowNull: true, })
     declare finishedAt?: Date | null;
 
-    @BelongsTo(() => PatientEntity)
+
     @ForeignKey(() => PatientEntity)
     @Column( DataType.UUID)
     declare patientId: string;
 
-    @BelongsTo(() => PatientEntity)
+    @BelongsTo(() => PatientEntity, 'patientId')
     declare patient: PatientEntity;
 
     @ForeignKey(() => UserEntity)
     @Column(DataType.UUID)
     declare createdByUserId: string;  
 
-    @BelongsTo(() => UserEntity)
-    declare createdByUser: UserEntity; 
+    @BelongsTo(() => UserEntity, 'createdByUserId')
+    declare createdByUser: UserEntity;
 }
