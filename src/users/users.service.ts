@@ -13,22 +13,22 @@ export class UsersService {
    async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const { email } = createUserDto;
 
-    // 1. A verificação de e-mail duplicado continua igual e é muito importante.
+    // A verificação de e-mail duplicado
     const existingUser = await this.findOneByEmail(email);
     if (existingUser) {
       throw new ConflictException(`O e-mail ${email} já está em uso.`);
     }
     
-    // 2. Criação do usuário.
+    // Criação do usuário.
     const user = await this.userModel.create(createUserDto as any);
-    // 3. Remover a senha do objeto de retorno.
+    // Remover a senha do objeto de retorno.
     const { password, ...result } = user.toJSON();
     return result as UserEntity;
   }
 
   async findAll(): Promise<UserEntity[]> {
     return this.userModel.findAll({
-      attributes: { exclude: ['password'] }, // Ótima prática de segurança!
+      attributes: { exclude: ['password'] }, 
     });
   }
 
@@ -43,14 +43,17 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string): Promise<UserEntity | null> {
-   
     return this.userModel.findOne({ where: { email } });
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserEntity> {
-    const user = await this.findOne(id); 
-    await user.update(updateUserDto);
-    return user;
+    const user = await this.userModel.findByPk(id); 
+    if (!user) {
+      throw new NotFoundException(`Utilizador com ID ${id} não encontrado.`);
+    }
+    const updatedUser = await user.update(updateUserDto);
+    const { password, ...result } = updatedUser.toJSON();
+    return result as UserEntity;
   }
 
   async remove(id: string): Promise<void> {
