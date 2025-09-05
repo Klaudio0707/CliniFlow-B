@@ -5,6 +5,8 @@ import { AppointmentsModule } from './appointments/appointments.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
+import { EventsGateway } from './events/events.gateway';
+import { EventsModule } from './events/events.module';
 
 @Module({
 imports: [
@@ -12,10 +14,11 @@ imports: [
     DatabaseModule,
    PatientsModule,
     AppointmentsModule,
+    EventsModule,
     UsersModule, 
     AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [EventsGateway],
 })
 export class AppModule {}
